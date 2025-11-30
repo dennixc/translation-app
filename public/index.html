@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 翻譯助手</title>
+    <title>數碼仔 - 電腦數碼產品專家</title>
     <style>
         * {
             margin: 0;
@@ -189,17 +189,17 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🌐 AI 翻譯助手</h1>
-            <p>輸入文字，即時翻譯</p>
+            <h1>🖥️ 數碼仔</h1>
+            <p>電腦數碼產品專家</p>
         </div>
         
         <div id="cspStatus" class="csp-status"></div>
         
         <div id="chatContainer" class="chat-container">
             <div class="message bot">
-                <span class="message-label">翻譯助手</span>
+                <span class="message-label">數碼仔</span>
                 <div class="message-bubble">
-                    你好！請輸入需要翻譯的文字，我會幫你翻譯。
+                    你好！我係數碼仔，電腦數碼產品專家。有咩關於電腦、手機、平板或其他數碼產品嘅問題，歡迎隨時問我！
                 </div>
             </div>
         </div>
@@ -207,7 +207,7 @@
         <div class="input-container">
             <textarea 
                 id="userInput" 
-                placeholder="輸入要翻譯的文字..."
+                placeholder="輸入你嘅問題..."
                 rows="2"
             ></textarea>
             <button id="sendBtn" onclick="sendMessage()">發送</button>
@@ -215,16 +215,13 @@
     </div>
 
     <script>
-        // ⚠️ 部署後請將此 URL 改為你的 Vercel 網址
         const API_URL = "/api/translate";
-        // 例如: const API_URL = "https://your-app.vercel.app/api/translate";
 
         const chatContainer = document.getElementById("chatContainer");
         const userInput = document.getElementById("userInput");
         const sendBtn = document.getElementById("sendBtn");
         const cspStatus = document.getElementById("cspStatus");
 
-        // Enter 鍵發送
         userInput.addEventListener("keydown", (e) => {
             if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -238,7 +235,7 @@
             
             if (isLoading) {
                 messageDiv.innerHTML = `
-                    <span class="message-label">翻譯助手</span>
+                    <span class="message-label">數碼仔</span>
                     <div class="loading">
                         <span></span>
                         <span></span>
@@ -248,7 +245,7 @@
                 messageDiv.id = "loadingMessage";
             } else {
                 messageDiv.innerHTML = `
-                    <span class="message-label">${isUser ? "你" : "翻譯助手"}</span>
+                    <span class="message-label">${isUser ? "你" : "數碼仔"}</span>
                     <div class="message-bubble">${escapeHtml(content)}</div>
                 `;
             }
@@ -274,12 +271,10 @@
             const message = userInput.value.trim();
             if (!message) return;
 
-            // 顯示用戶訊息
             addMessage(message, true);
             userInput.value = "";
             sendBtn.disabled = true;
 
-            // 顯示載入動畫
             addMessage("", false, true);
 
             try {
@@ -301,18 +296,16 @@
 
                 if (data.success) {
                     addMessage(data.translation);
-                    // CSP 測試成功
                     cspStatus.textContent = "✅ CSP 測試通過 - API 連接成功！";
                     cspStatus.className = "csp-status success";
                 } else {
-                    addMessage("翻譯失敗: " + (data.error || "未知錯誤"));
+                    addMessage("請求失敗: " + (data.error || "未知錯誤"));
                 }
 
             } catch (error) {
                 removeLoading();
                 console.error("Error:", error);
                 
-                // 檢查是否為 CSP 錯誤
                 if (error.message.includes("CSP") || error.message.includes("blocked")) {
                     cspStatus.textContent = "❌ CSP 錯誤 - Shopline 可能阻擋了外部 API 請求";
                     cspStatus.className = "csp-status error";
@@ -328,9 +321,8 @@
             userInput.focus();
         }
 
-        // 頁面載入時測試 CSP
         window.addEventListener("load", () => {
-            console.log("Translation App loaded. Ready to test CSP with Shopline.");
+            console.log("數碼仔 App loaded. Ready to test CSP with Shopline.");
         });
     </script>
 </body>

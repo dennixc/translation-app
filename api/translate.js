@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
         }
 
         const chat = await client.chat.completions.create({
-            model: "chatetoc",  // 你的 POE bot 名稱
+            model: "digitalguy",  // 你的 POE bot 名稱
             messages: [{ role: "user", content: message }]
         });
 
