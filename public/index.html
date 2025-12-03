@@ -13,30 +13,23 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 15px;
+            background: #f8f9fa;
         }
 
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            /* 手機版固定高度 */
-            height: 600px;
+            background: #f8f9fa;
         }
 
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 15px 20px;
+            padding: 20px;
             text-align: center;
-            flex-shrink: 0;
+            border-radius: 12px 12px 0 0;
+            margin: 0 10px;
         }
 
         .header h1 {
@@ -50,21 +43,24 @@
         }
 
         .chat-container {
-            flex: 1;
-            overflow-y: auto;
             padding: 20px;
-            background: #f8f9fa;
+            background: white;
+            margin: 0 10px;
+            border-left: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
+            min-height: 300px;
+        }
+
+        .messages {
             display: flex;
             flex-direction: column;
             gap: 16px;
-            /* 確保有最小高度 */
-            min-height: 0;
         }
 
         .message {
             display: flex;
             flex-direction: column;
-            max-width: 90%;
+            max-width: 85%;
         }
 
         .message.user {
@@ -93,11 +89,9 @@
         }
 
         .message.bot .message-bubble {
-            background: white;
+            background: #f1f3f4;
             color: #333;
-            border: 1px solid #e0e0e0;
             border-bottom-left-radius: 4px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
         .message-label {
@@ -110,10 +104,12 @@
         .input-container {
             padding: 15px;
             background: white;
-            border-top: 1px solid #eee;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
             display: flex;
             gap: 10px;
-            flex-shrink: 0;
+            margin: 0 10px 20px 10px;
         }
 
         .input-container textarea {
@@ -127,7 +123,7 @@
             transition: border-color 0.3s;
             font-family: inherit;
             min-height: 48px;
-            max-height: 100px;
+            max-height: 120px;
         }
 
         .input-container textarea:focus {
@@ -139,12 +135,11 @@
             color: white;
             border: none;
             border-radius: 12px;
-            padding: 12px 20px;
+            padding: 12px 24px;
             font-size: 1rem;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             align-self: flex-end;
-            flex-shrink: 0;
         }
 
         .input-container button:hover {
@@ -162,9 +157,8 @@
             display: flex;
             gap: 4px;
             padding: 12px 16px;
-            background: white;
+            background: #f1f3f4;
             border-radius: 18px;
-            border: 1px solid #e0e0e0;
             border-bottom-left-radius: 4px;
         }
 
@@ -184,52 +178,21 @@
             40% { transform: scale(1); }
         }
 
-        .csp-status {
-            padding: 10px 20px;
-            font-size: 0.85rem;
-            text-align: center;
-            display: none;
-            flex-shrink: 0;
-        }
-
-        .csp-status.error {
-            background: #f8d7da;
-            color: #721c24;
-            display: block;
-        }
-
-        /* 平板 */
-        @media (min-width: 600px) {
-            body {
-                padding: 20px;
+        /* 桌面版 */
+        @media (min-width: 768px) {
+            .header {
+                margin: 0 20px;
+                padding: 25px;
             }
             
-            .container {
-                height: 650px;
-                border-radius: 20px;
+            .header h1 {
+                font-size: 1.6rem;
             }
             
             .chat-container {
-                padding: 25px 30px;
-            }
-            
-            .message {
-                max-width: 80%;
-            }
-            
-            .input-container {
-                padding: 18px 25px;
-            }
-        }
-
-        /* 桌面 */
-        @media (min-width: 900px) {
-            .container {
-                height: 700px;
-            }
-            
-            .chat-container {
-                padding: 30px 50px;
+                margin: 0 20px;
+                padding: 30px 40px;
+                min-height: 400px;
             }
             
             .message {
@@ -237,31 +200,8 @@
             }
             
             .input-container {
-                padding: 20px 50px;
-            }
-            
-            .message-bubble {
-                padding: 14px 20px;
-                font-size: 1rem;
-            }
-        }
-
-        /* 大螢幕 */
-        @media (min-width: 1200px) {
-            .container {
-                height: 750px;
-            }
-            
-            .chat-container {
-                padding: 30px 80px;
-            }
-            
-            .message {
-                max-width: 65%;
-            }
-            
-            .input-container {
-                padding: 20px 80px;
+                margin: 0 20px 20px 20px;
+                padding: 20px;
             }
         }
     </style>
@@ -273,13 +213,11 @@
             <p>電腦數碼產品專家</p>
         </div>
         
-        <div id="cspStatus" class="csp-status"></div>
-        
-        <div id="chatContainer" class="chat-container">
-            <div class="message bot">
-                <span class="message-label">數碼仔</span>
-                <div class="message-bubble">
-                    你好！我係數碼仔，電腦數碼產品專家。有咩關於電腦、手機、平板或其他數碼產品嘅問題，歡迎隨時問我！
+        <div class="chat-container">
+            <div id="messages" class="messages">
+                <div class="message bot">
+                    <span class="message-label">數碼仔</span>
+                    <div class="message-bubble">你好！我係數碼仔，電腦數碼產品專家。有咩關於電腦、手機、平板或其他數碼產品嘅問題，歡迎隨時問我！</div>
                 </div>
             </div>
         </div>
@@ -296,11 +234,9 @@
 
     <script>
         const API_URL = "/api/translate";
-
-        const chatContainer = document.getElementById("chatContainer");
+        const messagesContainer = document.getElementById("messages");
         const userInput = document.getElementById("userInput");
         const sendBtn = document.getElementById("sendBtn");
-        const cspStatus = document.getElementById("cspStatus");
 
         userInput.addEventListener("keydown", (e) => {
             if (e.key === "Enter" && !e.shiftKey) {
@@ -330,8 +266,8 @@
                 `;
             }
             
-            chatContainer.appendChild(messageDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            messagesContainer.appendChild(messageDiv);
+            messageDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
             
             return messageDiv;
         }
@@ -360,9 +296,7 @@
             try {
                 const response = await fetch(API_URL, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ message })
                 });
 
@@ -383,25 +317,12 @@
             } catch (error) {
                 removeLoading();
                 console.error("Error:", error);
-                
-                if (error.message.includes("CSP") || error.message.includes("blocked")) {
-                    cspStatus.textContent = "❌ CSP 錯誤 - Shopline 可能阻擋了外部 API 請求";
-                    cspStatus.className = "csp-status error";
-                    addMessage("CSP 政策阻擋了請求，請檢查 Shopline 設定。");
-                } else {
-                    addMessage("連接錯誤: " + error.message);
-                    cspStatus.textContent = "⚠️ 請求失敗 - " + error.message;
-                    cspStatus.className = "csp-status error";
-                }
+                addMessage("連接錯誤: " + error.message);
             }
 
             sendBtn.disabled = false;
             userInput.focus();
         }
-
-        window.addEventListener("load", () => {
-            console.log("數碼仔 App loaded.");
-        });
     </script>
 </body>
 </html>
